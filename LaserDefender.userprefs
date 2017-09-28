@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\PlayerClass.cs">
+    <Files>
+      <File FileName="Assets\scripts\PlayerClass.cs" Line="35" Column="22" />
+      <File FileName="..\blockBreaker\Assets\scripts\Paddle.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\EnemySpawner.cs" Line="34" Column="1" />
+      <File FileName="Assets\scripts\Position.cs" Line="7" Column="48" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

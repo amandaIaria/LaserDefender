@@ -46,11 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\scripts\LevelManager.cs" />
-     <Compile Include="Assets\scripts\MusicPlayer.cs" />
-     <Compile Include="Assets\scripts\PlayerClass.cs" />
-     <None Include="Assets\images\FromDevs\SpaceShooterRedux\license.txt" />
-     <None Include="Assets\images\FromDevs\SpaceShooterRedux\Spritesheet\sheet.xml" />
+     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\MusicPlayer.cs" />
+     <Compile Include="Assets\Scripts\PlayerClass.cs" />
+     <Compile Include="Assets\Scripts\Position.cs" />
+     <Compile Include="Assets\Scripts\PulseController.cs" />
+     <Compile Include="Assets\Scripts\SheaderController.cs" />
+     <None Include="Assets\Images\FromDevs\SpaceShooterRedux\license.txt" />
+     <None Include="Assets\Images\FromDevs\SpaceShooterRedux\Spritesheet\sheet.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.9/Standalone/UnityEngine.UI.dll</HintPath>
  </Reference>
