@@ -6,7 +6,6 @@ public class SheaderController : MonoBehaviour {
 	//TODO: I created this to go along with the course. I'm not sure what would be more preformance working. This or what I did.
 	// What I did can be found on the bottom
 
-	// Use this for initialization
 	void OnTriggerEnter2D(Collider2D col){
 		Destroy(col.gameObject);
 	}
