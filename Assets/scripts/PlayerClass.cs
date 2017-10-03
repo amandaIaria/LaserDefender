@@ -2,20 +2,25 @@
 using System.Collections;
 
 public class PlayerClass : MonoBehaviour {
-	public float speed 	= 10.0f;
+	public float speed;
+	public float rateOfFire;
 	public float padding = 1.0f;
-	public GameObject pulse;
-	public GameObject pulse2;
-	public float fireRate = 0.2f;
+	public GameObject playerPulse1;
+	public GameObject playerPulse2;
+	public float health = 250f;
 	
-	private bool everyOther = true;
+	private bool everyOtherPulse = true;
 	private float minX, maxX;
 	private bool hasStarted;
 	private Rigidbody2D player;	
+	private SoundContainer playerSounds;
+	private LevelManager levelManager;
 	
 	// Use this for initialization
 	void Start () {
 		player = GetComponent<Rigidbody2D>();
+		levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		playerSounds = GameObject.Find("SoundContainer").GetComponent<SoundContainer>();
 		//this is the distance between the player and the camera
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftMost = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
@@ -29,6 +34,15 @@ public class PlayerClass : MonoBehaviour {
 		PlayerCombat();
 	}
 	
+	void OnTriggerEnter2D(Collider2D col){
+		PulseController missile = col.gameObject.GetComponent<PulseController>();
+		PlayerDamage(missile);
+	}
+	
+	
+	
+	//Custom Methods
+	
 	void PlayerMovement(){
 		float speedWithFrames  = speed * Time.deltaTime;
 		if(Input.GetKey(KeyCode.LeftArrow)){
@@ -39,29 +53,48 @@ public class PlayerClass : MonoBehaviour {
 			transform.position += Vector3.right * speedWithFrames;
 		}	
 		float newX = Mathf.Clamp(transform.position.x, minX, maxX);
-		transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+		transform.position = new Vector3(newX, transform.position.y, 0);
 	}
 
 	void PlayerCombat(){
-		float speedWithFrames  = speed * Time.deltaTime;
+		float speedWithFrames  = rateOfFire * Time.deltaTime;
 		if(Input.GetKeyDown(KeyCode.Space)){
-			InvokeRepeating("ChoosePulse", 0.000001f, fireRate);
+			InvokeRepeating("PlayerFiring", 0.000001f, speedWithFrames);
 		}
 		if(Input.GetKeyUp(KeyCode.Space)){
-			CancelInvoke("ChoosePulse");
+			CancelInvoke("PlayerFiring");
 		}
 	}
 	
-	void ChoosePulse(){
-		Vector3 playerPosAtSpace = new Vector3( transform.position.x , transform.position.y ,0 );
-		if(everyOther){
-			everyOther = false;
-			GameObject playerPulse = Instantiate( pulse, playerPosAtSpace, Quaternion.identity ) as GameObject;
+	void PlayerFiring(){
+		GameObject missile;
+		Vector3 offset = new Vector3(0, 1, 0);
+		playerSounds.PlayPlayerFiring();
+		if(everyOtherPulse){
+			everyOtherPulse = false;
+			missile = missileInstantiate( transform.position +offset, playerPulse1 ); 
 		}
 		else{
-			everyOther = true;
-			GameObject playerPulse = Instantiate( pulse2, playerPosAtSpace, Quaternion.identity ) as GameObject;
-			
+			everyOtherPulse = true;
+			missile = missileInstantiate( transform.position +offset, playerPulse2 ); 
+		}
+		missile.rigidbody2D.velocity = new Vector2(0, 10);
+	}
+	
+	GameObject missileInstantiate(Vector3 missilePos, GameObject playerPulse){
+		return Instantiate(playerPulse, missilePos, Quaternion.identity) as GameObject;
+	}
+	
+	void PlayerDamage(PulseController missile){
+		if(missile){
+			health -= missile.GetDamage();
+			missile.Hit();
+			if(health <= 0){
+				Destroy (gameObject);
+				levelManager.LoadLevel("Win Screen");
+			}
 		}
 	}
+	
+	
 }
